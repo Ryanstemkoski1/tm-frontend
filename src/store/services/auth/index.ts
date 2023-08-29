@@ -10,13 +10,24 @@ export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery,
   endpoints: (builder) => ({
-    signup: builder.mutation<CommonResponse<User>, SignupPayload>({
+    signup: builder.mutation<User, SignupPayload>({
       query(body) {
         return {
           url: `auth/signup`,
           method: 'POST',
           body,
         };
+      },
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(openInform({ show: true, type: 'success', message: 'Register successfully.' }));
+        } catch (err) {
+          console.log(err);
+          const { error } = err as ErrorResponse;
+
+          dispatch(openInform({ show: true, type: 'error', message: error?.data?.message || '' }));
+        }
       },
     }),
     signin: builder.mutation<SigninResponse, SigninPayload>({
@@ -31,10 +42,10 @@ export const authApi = createApi({
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-
           dispatch(setLogin(data));
           dispatch(openInform({ show: true, type: 'success', message: 'Logined successfully.' }));
         } catch (err) {
+          console.log(err);
           const { error } = err as ErrorResponse;
 
           dispatch(openInform({ show: true, type: 'error', message: error?.data?.message || '' }));

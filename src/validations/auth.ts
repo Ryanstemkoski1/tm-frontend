@@ -8,15 +8,10 @@ export const authValidation = yupResolver(
   }),
 );
 
-export const forgotPasswordValidation = yupResolver(
-  yup.object({
-    email: yup.string().required(),
-  }),
-);
-
 export const registerValidation = yupResolver(
   yup.object({
     email: yup.string().required(),
     password: yup.string().required(),
+    confirm_password: yup.string().required(),
   }),
 );

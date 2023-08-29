@@ -118,7 +118,7 @@ export const PrivateLayout = ({ children }: { children: ReactNode }) => {
 export const PublicLayout = ({ children }: { children: ReactNode }) => {
   const { isLoggedIn } = useAuth();
   if (isLoggedIn) {
-    return <Navigate to="/" />;
+    return <Navigate to="/dashboard" />;
   }
 
   return <Container maxWidth="xs">{children}</Container>;

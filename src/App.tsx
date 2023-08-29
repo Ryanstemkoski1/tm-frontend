@@ -1,6 +1,7 @@
 import ReduxProvider from './store/provider';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Inform } from './components/Inform';
 
 import { PublicLayout, PrivateLayout } from './containers/Layout';
 import ErrorPage from './containers/error-page';
@@ -51,6 +52,7 @@ function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <ReduxProvider>
+        <Inform />
         <RouterProvider router={router} />
       </ReduxProvider>
     </ThemeProvider>
