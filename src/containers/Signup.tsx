@@ -1,6 +1,6 @@
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import { Link, redirect } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -14,16 +14,19 @@ import { registerValidation } from '@app/validations';
 import { HTextField } from '@app/components/HTextField';
 
 export default function Signup() {
+  const navigate = useNavigate();
   const [signup, { isLoading }] = useSignupMutation();
   const { handleSubmit, control, reset } = useForm<SignupPayload>({
     resolver: registerValidation,
   });
 
   const onSubmit: SubmitHandler<SignupPayload> = (data) => {
-    signup(data).then(() => {
-      reset();
-      redirect('/signin');
-    });
+    signup(data)
+      .unwrap()
+      .then(() => {
+        reset();
+        navigate('/signin');
+      });
   };
 
   return (
