@@ -85,13 +85,6 @@ export const PrivateLayout = ({ children }: { children: ReactNode }) => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent">
-        <Divider />
-        <List component="nav">
-          {mainListItems}
-          <Divider sx={{ my: 1 }} />
-        </List>
-      </Drawer>
       <Box
         component="main"
         sx={{

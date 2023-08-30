@@ -14,6 +14,7 @@ import storage from 'redux-persist/lib/storage';
 import auth from './reducers/auth';
 import inform from './reducers/inform';
 import { authApi } from './services/auth';
+import { eventApi } from './services/events';
 
 const persistConfig = {
   key: 'root',
@@ -26,6 +27,7 @@ const RootReducer = combineReducers({
   auth,
   inform,
   [authApi.reducerPath]: authApi.reducer,
+  [eventApi.reducerPath]: eventApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, RootReducer);
@@ -38,7 +40,7 @@ export const store: Store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(authApi.middleware),
+    }).concat(authApi.middleware, eventApi.middleware),
 });
 
 setupListeners(store.dispatch);
